@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="/static/css/forgot.css">
+</head>
+<body>
+    <div class="bg-container">
+    <div class="container">
+        <h2>Forgot Password</h2>
+        <form action="/forget" method="post" style="padding: 20px;">
+            <p>{{ack}}</p>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit" >Send</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

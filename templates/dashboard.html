@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognizer</title>
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <!-- Converter section Starts -->
+
+    <section class="converter" id="converter">
+        <div class="converter-container">
+            <h1 class="main-heading">Voice to Text Converter</h1>
+            <textarea id="convert_text"></textarea>
+            <i class="fa-solid fa-microphone" style="font-size: 2rem; margin-right:10px; color: #fff;"></i>
+            <button id="click_to_convert">Voice to Text</button>
+            <button>Analyze</button>
+
+            <p> Positive: </p>
+            <p> Negative: </p>
+            <p> Neutral: </p>
+        </div>
+
+        <div class="video-analyzer">
+            <h1 class="main-heading">
+                Video/Image Analyzer
+            </h1>
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="file-content">
+                    <label for="file">Select a file:</label><br>
+                    <input type="file" id="file" class="file-choose" name="file" accept="image/, video/">
+                </div>
+                <input type="submit" value="Upload">
+                <p>Analysing</p>
+                <textarea id="convert_text"></textarea>
+            </form>
+            
+        </div>
+    </section>
+
+    <!-- Converter section ends -->
+
+    <script type="text/javascript">
+        const click_to_convert = document.getElementById("click_to_convert");
+        click_to_convert.addEventListener('click', function() {
+        var speech=true;
+        window.SpeechRecognition = window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+
+        recognition.addEventListener('result', e=> {
+            const transcript = Array.from(e.results)
+            .map(result => result[0])
+            .map(result => result.transcript)
+
+            convert_text.innerHTML = transcript;
+        })
+
+        if(speech == true) {
+            recognition.start();
+        }
+        })
+
+    </script>
+</body>
+</html>

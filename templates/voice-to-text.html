@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>voice-to-text</title>
+   <link rel="stylesheet" href="../static/css/voice-to-text.css">
+</head>
+<body>
+    <section class="converter">
+       <h1 class="heading"> <span>Voice-to-Text</span> Analyzer </h1>
+       <div class="converter-container">
+           <button id="startDictation">Start </button>
+           <button id="stopDictation">Stop</button>
+          <form action="/voice-to-text" method="post">
+            <input type="text" name="text" id="inp" readonly hidden />
+            <button type="submit">Analyze</button>
+            </form>
+        </div>
+        <div id="output" class="background">{{text}}</div>
+        <div class="sen">
+            <h3>{{sentiment}}</h3>
+            <p>Positive : {{ack['Positive']}}</p>
+            <p>Negative : {{ack['Negative']}}</p>
+            <p>Neautral : {{ack['Neutral']}}</p>
+        </div>
+        <a href="/back">
+            <button>Back</button></a>
+    <!-- Script section starts -->
+    <script>
+        var output = document.getElementById("output");
+        var startDictation = document.getElementById("startDictation");
+        var stopDictation = document.getElementById("stopDictation");
+
+
+        if ('webkitSpeechRecognition' in window) {
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onresult = function(event) {
+                var interimTranscript = '';
+                var finalTranscript = '';
+
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+
+                output.innerHTML = finalTranscript + '<span style="color:#999">' + interimTranscript + '</span>';
+                document.getElementById('inp').value = finalTranscript
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            };
+
+            startDictation.onclick = function(event) {
+                recognition.start();
+            };
+            stopDictation.onclick = function(event){
+                recognition.stop()
+            }
+        } else {
+            output.innerHTML = 'Your browser doesn\'t support speech recognition. Please try again with a different browser.';
+        }
+    </script>
+</body>
+</html>

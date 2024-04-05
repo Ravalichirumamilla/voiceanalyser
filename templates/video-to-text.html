@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/video-to-text.css">
+</head>
+<body>
+    <section class="converter">
+    <div class="video-analyzer">
+        <h1 class="heading"> <span>Audio/Video</span> Analyzer </h1>
+        <p>{{ack}}</p>
+        <form action="/video-to-text" method="post" enctype="multipart/form-data">
+            <div class="file-content">
+                <label for="file">Select a file:</label><br>
+                <input type="file" id="file" class="file-choose" name="video" accept="audio/*, video/*">
+            </div>
+            <input type="submit" class="upload" value="Upload">
+            
+        </form>
+        <div class="converter-container">
+        <p>{{data}}</p>
+        </div>
+        <div>
+            <p>Sentiment : {{sen}}</p>
+        </div>
+        <div class="sc">
+            <p>Positive:{{score['Positive']}} </p>
+            <p>Negitive :{{score['Negative']}}</p>
+            <p>Neutral : {{score['Neutral']}}</p>
+        </div>
+        <a href="/back">
+        <button>Back</button></a>
+    </div>
+</section>
+</body>
+</html>
+
